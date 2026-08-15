@@ -3,122 +3,210 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>SENTA Rota</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-  background: #f2f4f7;
+  background: #f3f5f7;
   color: #1f2937;
 }
 
 header {
-  background: linear-gradient(135deg, #10233f, #1e4773);
+  background: #17365d;
   color: white;
-  padding: 24px 18px 20px;
+  padding: 20px 16px 14px;
 }
 
 header h1 {
   margin: 0;
-  font-size: 26px;
+  font-size: 25px;
 }
 
 header p {
-  margin: 5px 0 0;
+  margin: 4px 0 0;
   opacity: 0.8;
-}
-
-.container {
-  max-width: 620px;
-  margin: auto;
-  padding: 16px;
-}
-
-.notice {
-  background: white;
-  border-radius: 12px;
-  padding: 13px 15px;
-  margin-bottom: 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   font-size: 14px;
 }
 
-.day-card {
+.tabs {
+  display: flex;
   background: white;
-  border-radius: 16px;
-  overflow: hidden;
-  margin-bottom: 18px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-.day-header {
-  background: #e7edf4;
-  padding: 14px 16px;
+.tab {
+  flex: 1;
+  padding: 12px 4px;
+  border: 0;
+  background: white;
+  font-weight: bold;
+  font-size: 13px;
+  cursor: pointer;
 }
 
-.day-header strong {
+.tab.active {
+  background: #17365d;
+  color: white;
+}
+
+.page {
+  display: none;
+  max-width: 850px;
+  margin: auto;
+  padding: 14px;
+}
+
+.page.active {
   display: block;
+}
+
+.card {
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.card-title {
+  padding: 14px 16px;
+  background: #e9eef5;
+  font-weight: bold;
+}
+
+.person-title {
+  padding: 14px 16px 6px;
+  font-weight: bold;
   font-size: 18px;
 }
 
-.day-header span {
-  font-size: 13px;
-  color: #667085;
+.month-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  padding: 12px;
 }
 
-.person {
-  padding: 14px 16px;
-  border-top: 1px solid #edf0f2;
+.weekday {
+  text-align: center;
+  font-size: 11px;
+  font-weight: bold;
+  color: #667085;
+  padding-bottom: 4px;
+}
+
+.day-box {
+  min-height: 62px;
+  border-radius: 9px;
+  padding: 6px;
+  background: #f7f8fa;
+  border: 1px solid #e5e7eb;
+}
+
+.day-number {
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.code {
+  display: inline-block;
+  padding: 4px 6px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.dc { background: #dcfce7; color: #166534; }
+.nc { background: #dbeafe; color: #1e40af; }
+.rd { background: #eeeeee; color: #555; }
+.f  { background: #fef3c7; color: #92400e; }
+.leave { background: #fde2e2; color: #991b1b; }
+
+.manager-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.manager-table th,
+.manager-table td {
+  border: 1px solid #e5e7eb;
+  padding: 8px;
+  text-align: center;
+}
+
+.manager-table th {
+  background: #eef2f6;
+}
+
+.manager-table td:first-child,
+.manager-table th:first-child {
+  text-align: left;
+  font-weight: bold;
+  position: sticky;
+  left: 0;
+  background: white;
+}
+
+.scroll {
+  overflow-x: auto;
+}
+
+.daily-person {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
+  padding: 13px 16px;
+  border-top: 1px solid #eee;
 }
 
-.person-name {
-  font-weight: bold;
-  font-size: 16px;
-}
-
-.shift {
+.shift-badge {
   padding: 7px 10px;
-  border-radius: 20px;
-  font-size: 13px;
+  border-radius: 16px;
+  font-size: 12px;
   font-weight: bold;
-  white-space: nowrap;
 }
 
-.day {
-  background: #dcfce7;
-  color: #166534;
+.summary {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 12px;
 }
 
-.night {
-  background: #dbeafe;
-  color: #1e40af;
+.summary-box {
+  background: #f5f7fa;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
 }
 
-.rest {
-  background: #eeeeee;
-  color: #555;
+.summary-box strong {
+  display: block;
+  font-size: 20px;
 }
 
-.other {
-  background: #fef3c7;
-  color: #92400e;
+.notice {
+  padding: 12px 14px;
+  background: #fff7d6;
+  border-radius: 10px;
+  margin-bottom: 14px;
+  font-size: 13px;
 }
 
 footer {
   text-align: center;
+  color: #777;
+  font-size: 11px;
   padding: 18px;
-  font-size: 12px;
-  color: #77808c;
 }
 </style>
 </head>
@@ -130,70 +218,183 @@ footer {
   <p>Mobile Staff Rota</p>
 </header>
 
-<div class="container">
+<div class="tabs">
+  <button class="tab active" onclick="showPage('myrota', this)">My Rota</button>
+  <button class="tab" onclick="showPage('managerMonth', this)">Manager Month</button>
+  <button class="tab" onclick="showPage('managerDay', this)">Manager Day</button>
+</div>
+
+<div id="myrota" class="page active">
 
   <div class="notice">
-    📅 Rota information shown below is test data.
+    Test data only
   </div>
 
-  <div class="day-card">
+  <div class="card">
+    <div class="person-title">Staff Member 1</div>
+    <div class="card-title">August 2026</div>
 
-    <div class="day-header">
-      <strong>Monday 17 August</strong>
-      <span>Daily rota</span>
+    <div class="month-grid">
+
+      <div class="weekday">Mon</div>
+      <div class="weekday">Tue</div>
+      <div class="weekday">Wed</div>
+      <div class="weekday">Thu</div>
+      <div class="weekday">Fri</div>
+      <div class="weekday">Sat</div>
+      <div class="weekday">Sun</div>
+
+      <div class="day-box"><div class="day-number">3</div><span class="code dc">DC</span></div>
+      <div class="day-box"><div class="day-number">4</div><span class="code dc">DC</span></div>
+      <div class="day-box"><div class="day-number">5</div><span class="code rd">RD</span></div>
+      <div class="day-box"><div class="day-number">6</div><span class="code nc">NC</span></div>
+      <div class="day-box"><div class="day-number">7</div><span class="code nc">NC</span></div>
+      <div class="day-box"><div class="day-number">8</div><span class="code rd">RD</span></div>
+      <div class="day-box"><div class="day-number">9</div><span class="code f">F</span></div>
+
+      <div class="day-box"><div class="day-number">10</div><span class="code dc">DC</span></div>
+      <div class="day-box"><div class="day-number">11</div><span class="code dc">DC</span></div>
+      <div class="day-box"><div class="day-number">12</div><span class="code rd">RD</span></div>
+      <div class="day-box"><div class="day-number">13</div><span class="code nc">NC</span></div>
+      <div class="day-box"><div class="day-number">14</div><span class="code nc">NC</span></div>
+      <div class="day-box"><div class="day-number">15</div><span class="code rd">RD</span></div>
+      <div class="day-box"><div class="day-number">16</div><span class="code leave">Leave</span></div>
+
+    </div>
+  </div>
+</div>
+
+<div id="managerMonth" class="page">
+
+  <div class="notice">
+    Manager overview — useful for spotting leave and possible gaps.
+  </div>
+
+  <div class="card">
+    <div class="card-title">August 2026 — Team Overview</div>
+
+    <div class="scroll">
+      <table class="manager-table">
+        <tr>
+          <th>Staff</th>
+          <th>17</th>
+          <th>18</th>
+          <th>19</th>
+          <th>20</th>
+          <th>21</th>
+          <th>22</th>
+          <th>23</th>
+        </tr>
+        <tr>
+          <td>Staff 1</td>
+          <td>DC</td>
+          <td>RD</td>
+          <td>NC</td>
+          <td>NC</td>
+          <td>RD</td>
+          <td>F</td>
+          <td>DC</td>
+        </tr>
+        <tr>
+          <td>Staff 2</td>
+          <td>NC</td>
+          <td>DC</td>
+          <td>DC</td>
+          <td>RD</td>
+          <td>RD</td>
+          <td>DC</td>
+          <td>DC</td>
+        </tr>
+        <tr>
+          <td>Staff 3</td>
+          <td>RD</td>
+          <td>NC</td>
+          <td>NC</td>
+          <td>DC</td>
+          <td>Leave</td>
+          <td>Leave</td>
+          <td>RD</td>
+        </tr>
+        <tr>
+          <td>Staff 4</td>
+          <td>F</td>
+          <td>F</td>
+          <td>DC</td>
+          <td>DC</td>
+          <td>RD</td>
+          <td>NC</td>
+          <td>NC</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="managerDay" class="page">
+
+  <div class="card">
+    <div class="card-title">Monday 17 August</div>
+
+    <div class="summary">
+      <div class="summary-box">
+        <strong>2</strong>
+        Day Shift
+      </div>
+      <div class="summary-box">
+        <strong>1</strong>
+        Night Shift
+      </div>
+      <div class="summary-box">
+        <strong>1</strong>
+        Rest Day
+      </div>
+      <div class="summary-box">
+        <strong>1</strong>
+        F / Other
+      </div>
     </div>
 
-    <div class="person">
-      <div class="person-name">Staff Member 1</div>
-      <div class="shift day">Day Shift</div>
+    <div class="daily-person">
+      <strong>Staff Member 1</strong>
+      <span class="shift-badge dc">Day Shift</span>
     </div>
 
-    <div class="person">
-      <div class="person-name">Staff Member 2</div>
-      <div class="shift night">Night Shift</div>
+    <div class="daily-person">
+      <strong>Staff Member 2</strong>
+      <span class="shift-badge nc">Night Shift</span>
     </div>
 
-    <div class="person">
-      <div class="person-name">Staff Member 3</div>
-      <div class="shift rest">Rest Day</div>
+    <div class="daily-person">
+      <strong>Staff Member 3</strong>
+      <span class="shift-badge rd">Rest Day</span>
     </div>
 
-    <div class="person">
-      <div class="person-name">Staff Member 4</div>
-      <div class="shift other">F</div>
+    <div class="daily-person">
+      <strong>Staff Member 4</strong>
+      <span class="shift-badge f">F</span>
     </div>
 
   </div>
-
-  <div class="day-card">
-
-    <div class="day-header">
-      <strong>Tuesday 18 August</strong>
-      <span>Daily rota</span>
-    </div>
-
-    <div class="person">
-      <div class="person-name">Staff Member 1</div>
-      <div class="shift rest">Rest Day</div>
-    </div>
-
-    <div class="person">
-      <div class="person-name">Staff Member 2</div>
-      <div class="shift day">Day Shift</div>
-    </div>
-
-    <div class="person">
-      <div class="person-name">Staff Member 3</div>
-      <div class="shift night">Night Shift</div>
-    </div>
-
-  </div>
-
 </div>
 
 <footer>
-  SENTA Mobile Rota
+  SENTA Mobile Rota Prototype
 </footer>
+
+<script>
+function showPage(pageId, button) {
+  document.querySelectorAll('.page').forEach(page => {
+    page.classList.remove('active');
+  });
+
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.classList.remove('active');
+  });
+
+  document.getElementById(pageId).classList.add('active');
+  button.classList.add('active');
+}
+</script>
 
 </body>
 </html>
