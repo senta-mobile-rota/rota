@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SENTA Rota</title>
+
+<style>
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f4f6;
+}
+
+.header {
+    background: #172b4d;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.header p {
+    margin: 6px 0 0;
+    opacity: 0.8;
+}
+
+.container {
+    padding: 15px;
+    max-width: 600px;
+    margin: auto;
+}
+
+.day {
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.day-title {
+    background: #e5e7eb;
+    padding: 12px 15px;
+    font-weight: bold;
+}
+
+.person {
+    padding: 13px 15px;
+    border-top: 1px solid #eee;
+}
+
+.name {
+    font-weight: bold;
+}
+
+.shift {
+    margin-top: 4px;
+    font-size: 14px;
+}
+
+.day-shift {
+    color: #16794b;
+}
+
+.night-shift {
+    color: #3346a8;
+}
+
+.rest-day {
+    color: #777;
+}
+
+.footer {
+    text-align: center;
+    font-size: 12px;
+    color: #777;
+    padding: 20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>SENTA Rota</h1>
+    <p>Mobile Staff Rota</p>
+</div>
+
+<div class="container">
+
+    <div class="day">
+
+        <div class="day-title">
+            Monday 17 August
+        </div>
+
+        <div class="person">
+            <div class="name">Staff Member 1</div>
+            <div class="shift day-shift">Day Shift</div>
+        </div>
+
+        <div class="person">
+            <div class="name">Staff Member 2</div>
+            <div class="shift night-shift">Night Shift</div>
+        </div>
+
+        <div class="person">
+            <div class="name">Staff Member 3</div>
+            <div class="shift rest-day">Rest Day</div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="footer">
+    Rota updates automatically
+</div>
+
+</body>
+</html>
