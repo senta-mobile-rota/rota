@@ -7,123 +7,193 @@
 <title>SENTA Rota</title>
 
 <style>
+* {
+  box-sizing: border-box;
+}
 
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f3f4f6;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f2f4f7;
+  color: #1f2937;
 }
 
-.header {
-    background: #172b4d;
-    color: white;
-    padding: 20px;
-    text-align: center;
+header {
+  background: linear-gradient(135deg, #10233f, #1e4773);
+  color: white;
+  padding: 24px 18px 20px;
 }
 
-.header h1 {
-    margin: 0;
-    font-size: 24px;
+header h1 {
+  margin: 0;
+  font-size: 26px;
 }
 
-.header p {
-    margin: 6px 0 0;
-    opacity: 0.8;
+header p {
+  margin: 5px 0 0;
+  opacity: 0.8;
 }
 
 .container {
-    padding: 15px;
-    max-width: 600px;
-    margin: auto;
+  max-width: 620px;
+  margin: auto;
+  padding: 16px;
 }
 
-.day {
-    background: white;
-    border-radius: 12px;
-    margin-bottom: 15px;
-    overflow: hidden;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+.notice {
+  background: white;
+  border-radius: 12px;
+  padding: 13px 15px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  font-size: 14px;
 }
 
-.day-title {
-    background: #e5e7eb;
-    padding: 12px 15px;
-    font-weight: bold;
+.day-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 18px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.day-header {
+  background: #e7edf4;
+  padding: 14px 16px;
+}
+
+.day-header strong {
+  display: block;
+  font-size: 18px;
+}
+
+.day-header span {
+  font-size: 13px;
+  color: #667085;
 }
 
 .person {
-    padding: 13px 15px;
-    border-top: 1px solid #eee;
+  padding: 14px 16px;
+  border-top: 1px solid #edf0f2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
 }
 
-.name {
-    font-weight: bold;
+.person-name {
+  font-weight: bold;
+  font-size: 16px;
 }
 
 .shift {
-    margin-top: 4px;
-    font-size: 14px;
+  padding: 7px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+  white-space: nowrap;
 }
 
-.day-shift {
-    color: #16794b;
+.day {
+  background: #dcfce7;
+  color: #166534;
 }
 
-.night-shift {
-    color: #3346a8;
+.night {
+  background: #dbeafe;
+  color: #1e40af;
 }
 
-.rest-day {
-    color: #777;
+.rest {
+  background: #eeeeee;
+  color: #555;
 }
 
-.footer {
-    text-align: center;
-    font-size: 12px;
-    color: #777;
-    padding: 20px;
+.other {
+  background: #fef3c7;
+  color: #92400e;
 }
 
+footer {
+  text-align: center;
+  padding: 18px;
+  font-size: 12px;
+  color: #77808c;
+}
 </style>
 </head>
 
 <body>
 
-<div class="header">
-    <h1>SENTA Rota</h1>
-    <p>Mobile Staff Rota</p>
-</div>
+<header>
+  <h1>SENTA Rota</h1>
+  <p>Mobile Staff Rota</p>
+</header>
 
 <div class="container">
 
-    <div class="day">
+  <div class="notice">
+    📅 Rota information shown below is test data.
+  </div>
 
-        <div class="day-title">
-            Monday 17 August
-        </div>
+  <div class="day-card">
 
-        <div class="person">
-            <div class="name">Staff Member 1</div>
-            <div class="shift day-shift">Day Shift</div>
-        </div>
-
-        <div class="person">
-            <div class="name">Staff Member 2</div>
-            <div class="shift night-shift">Night Shift</div>
-        </div>
-
-        <div class="person">
-            <div class="name">Staff Member 3</div>
-            <div class="shift rest-day">Rest Day</div>
-        </div>
-
+    <div class="day-header">
+      <strong>Monday 17 August</strong>
+      <span>Daily rota</span>
     </div>
 
+    <div class="person">
+      <div class="person-name">Staff Member 1</div>
+      <div class="shift day">Day Shift</div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">Staff Member 2</div>
+      <div class="shift night">Night Shift</div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">Staff Member 3</div>
+      <div class="shift rest">Rest Day</div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">Staff Member 4</div>
+      <div class="shift other">F</div>
+    </div>
+
+  </div>
+
+  <div class="day-card">
+
+    <div class="day-header">
+      <strong>Tuesday 18 August</strong>
+      <span>Daily rota</span>
+    </div>
+
+    <div class="person">
+      <div class="person-name">Staff Member 1</div>
+      <div class="shift rest">Rest Day</div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">Staff Member 2</div>
+      <div class="shift day">Day Shift</div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">Staff Member 3</div>
+      <div class="shift night">Night Shift</div>
+    </div>
+
+  </div>
+
 </div>
 
-<div class="footer">
-    Rota updates automatically
-</div>
+<footer>
+  SENTA Mobile Rota
+</footer>
 
 </body>
 </html>
