@@ -271,29 +271,16 @@ footer {
 
 <div id="managerDay" class="page">
 
-  <div class="card">
-    <div class="month-nav">
-      <button>‹</button>
-      <div class="month-title">Monday 17 August</div>
-      <button>›</button>
+    <div class="card">
+        <div class="month-nav">
+            <button onclick="changeManagerDay(-1)">‹</button>
+            <div id="managerDayTitle" class="month-title"></div>
+            <button onclick="changeManagerDay(1)">›</button>
+        </div>
+
+        <div id="managerDayList"></div>
     </div>
 
-    <div class="daily-person">
-      <strong>Staff1</strong>
-      <span class="shift-badge dc">Day Shift</span>
-    </div>
-
-    <div class="daily-person">
-      <strong>Staff2</strong>
-      <span class="shift-badge nc">Night Shift</span>
-    </div>
-
-    <div class="daily-person">
-      <strong>Staff3</strong>
-      <span class="shift-badge rd">Rest Day</span>
-    </div>
-
-  </div>
 </div>
 
 <footer>
@@ -366,7 +353,7 @@ function buildSelectedRota() {
 
     renderCalendar();
   renderManagerMonth();
-  
+  renderManagerDay();
 }
 
 
@@ -439,6 +426,55 @@ function renderManagerMonth() {
     });
 
     table.innerHTML = html;
+}
+  let managerDayDate = new Date(2026, 7, 17);
+
+function changeManagerDay(delta) {
+    managerDayDate.setDate(managerDayDate.getDate() + delta);
+    renderManagerDay();
+}
+
+function renderManagerDay() {
+    const title = document.getElementById("managerDayTitle");
+    const list = document.getElementById("managerDayList");
+
+    if (!title || !list || !rotaRows.length) return;
+
+    const dayName = managerDayDate.toLocaleDateString("en-GB", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    });
+
+    title.textContent = dayName;
+
+    const dd = String(managerDayDate.getDate()).padStart(2, "0");
+    const mm = String(managerDayDate.getMonth() + 1).padStart(2, "0");
+    const yyyy = String(managerDayDate.getFullYear());
+
+    const dateString = `${dd}/${mm}/${yyyy}`;
+
+    const rowsForDay = rotaRows
+        .filter(row => row[0] === dateString && row[2])
+        .sort((a, b) => a[2].localeCompare(b[2]));
+
+    let html = "";
+
+    rowsForDay.forEach(row => {
+        const rotaLine = row[2];
+        const shiftCode = row[5];
+        const status = row[6] || shiftCode || "";
+
+        html += `
+            <div class="daily-person">
+                <strong>${rotaLine}</strong>
+                <span class="shift-badge ${shiftClass(shiftCode)}">${status}</span>
+            </div>
+        `;
+    });
+
+    list.innerHTML = html || "<div class='daily-person'>No rota entries for this date</div>";
 }
 let currentYear = 2026;
 let currentMonth = 7;
