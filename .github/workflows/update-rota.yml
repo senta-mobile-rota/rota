@@ -1,0 +1,30 @@
+name: Update SENTA Rota
+
+on:
+  repository_dispatch:
+    types: [update-rota]
+
+jobs:
+  update-rota:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Update rota data
+        env:
+          ROTA_DATA: ${{ toJson(github.event.client_payload.rota) }}
+        run: |
+          printf '%s' "$ROTA_DATA" > rota.json
+
+      - name: Commit updated rota
+        run: |
+          git config user.name "SENTA Rota Automation"
+          git config user.email "actions@github.com"
+          git add rota.json
+          git diff --cached --quiet || git commit -m "Update SENTA rota"
+          git push
