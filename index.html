@@ -251,62 +251,22 @@ footer {
 
 <div id="managerMonth" class="page">
 
-  <div class="notice">
-    Manager overview — useful for spotting leave and possible gaps.
-  </div>
-
-  <div class="card">
-    <div class="month-nav">
-      <button>‹</button>
-      <div class="month-title">August 2026 — Team Overview</div>
-      <button>›</button>
+    <div class="notice">
+        Manager overview — live rota data
     </div>
 
-    <div class="scroll">
-      <table class="manager-table">
-        <tr>
-          <th>Staff</th>
-          <th>17</th>
-          <th>18</th>
-          <th>19</th>
-          <th>20</th>
-          <th>21</th>
-          <th>22</th>
-          <th>23</th>
-        </tr>
-        <tr>
-          <td>Staff1</td>
-          <td>DC</td>
-          <td>RD</td>
-          <td>NC</td>
-          <td>NC</td>
-          <td>RD</td>
-          <td>F</td>
-          <td>DC</td>
-        </tr>
-        <tr>
-          <td>Staff2</td>
-          <td>NC</td>
-          <td>DC</td>
-          <td>DC</td>
-          <td>RD</td>
-          <td>RD</td>
-          <td>DC</td>
-          <td>DC</td>
-        </tr>
-        <tr>
-          <td>Staff3</td>
-          <td>RD</td>
-          <td>NC</td>
-          <td>NC</td>
-          <td>DC</td>
-          <td>Leave</td>
-          <td>Leave</td>
-          <td>RD</td>
-        </tr>
-      </table>
+    <div class="card">
+        <div class="month-nav">
+            <button onclick="changeManagerMonth(-1)">‹</button>
+            <div id="managerMonthTitle" class="month-title"></div>
+            <button onclick="changeManagerMonth(1)">›</button>
+        </div>
+
+        <div class="scroll">
+            <table id="managerMonthTable" class="manager-table"></table>
+        </div>
     </div>
-  </div>
+
 </div>
 
 <div id="managerDay" class="page">
@@ -405,11 +365,81 @@ function buildSelectedRota() {
     });
 
     renderCalendar();
+  renderManagerMonth();
+  
 }
 
-loadRota()
 
 loadRota();
+  let managerYear = 2026;
+let managerMonth = 7;
+
+function changeManagerMonth(delta) {
+    managerMonth += delta;
+
+    if (managerMonth < 0) {
+        managerMonth = 11;
+        managerYear--;
+    }
+
+    if (managerMonth > 11) {
+        managerMonth = 0;
+        managerYear++;
+    }
+
+    renderManagerMonth();
+}
+
+function renderManagerMonth() {
+    const title = document.getElementById("managerMonthTitle");
+    const table = document.getElementById("managerMonthTable");
+
+    if (!title || !table || !rotaRows.length) return;
+
+    const monthName = new Date(managerYear, managerMonth, 1)
+        .toLocaleString("en-GB", { month: "long", year: "numeric" });
+
+    title.textContent = monthName + " — Team Overview";
+
+    const daysInMonth = new Date(managerYear, managerMonth + 1, 0).getDate();
+
+    const rotaLines = [...new Set(
+        rotaRows.map(row => row[2]).filter(Boolean)
+    )].sort();
+
+    let html = "<tr><th>Rota line</th>";
+
+    for (let day = 1; day <= daysInMonth; day++) {
+        html += `<th>${day}</th>`;
+    }
+
+    html += "</tr>";
+
+    rotaLines.forEach(line => {
+        html += `<tr><td><strong>${line}</strong></td>`;
+
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dd = String(day).padStart(2, "0");
+            const mm = String(managerMonth + 1).padStart(2, "0");
+            const yyyy = String(managerYear);
+
+            const dateString = `${dd}/${mm}/${yyyy}`;
+
+            const row = rotaRows.find(r =>
+                r[0] === dateString &&
+                r[2] === line
+            );
+
+            const code = row ? row[5] : "";
+
+            html += `<td>${code}</td>`;
+        }
+
+        html += "</tr>";
+    });
+
+    table.innerHTML = html;
+}
 let currentYear = 2026;
 let currentMonth = 7;
 
