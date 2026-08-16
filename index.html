@@ -234,7 +234,10 @@ footer {
   </div>
 
   <div class="card">
-    <div class="person-title">Staff1</div>
+    <div class="person-title">
+    Rota line:
+    <select id="rotaLineSelect" onchange="selectRotaLine(this.value)"></select>
+</div>
 
     <div class="month-nav">
       <button onclick="changeMonth(-1)">‹</button>
@@ -352,16 +355,48 @@ function showPage(pageId, button) {
 }
 
 let testShifts = {};
+let rotaRows = [];
+let selectedRotaLine = "";
+
 async function loadRota() {
     const response = await fetch("./rota.json?ts=" + Date.now());
-    const rows = await response.json();
+    rotaRows = await response.json();
 
-    rows.forEach(row => {
+    const select = document.getElementById("rotaLineSelect");
+
+    const rotaLines = [...new Set(
+        rotaRows.map(row => row[2]).filter(Boolean)
+    )].sort();
+
+    select.innerHTML = "";
+
+    rotaLines.forEach(line => {
+        const option = document.createElement("option");
+        option.value = line;
+        option.textContent = line;
+        select.appendChild(option);
+    });
+
+    selectedRotaLine = rotaLines.includes("AA1") ? "AA1" : rotaLines[0];
+    select.value = selectedRotaLine;
+
+    buildSelectedRota();
+}
+
+function selectRotaLine(line) {
+    selectedRotaLine = line;
+    buildSelectedRota();
+}
+
+function buildSelectedRota() {
+    testShifts = {};
+
+    rotaRows.forEach(row => {
         const date = row[0];
         const rotaLine = row[2];
         const shiftCode = row[5];
 
-        if (rotaLine === "AA1" && date && shiftCode) {
+        if (rotaLine === selectedRotaLine && date && shiftCode) {
             const parts = date.split("/");
             const key = `${parts[2]}-${parts[1]}-${parts[0]}`;
 
@@ -371,6 +406,8 @@ async function loadRota() {
 
     renderCalendar();
 }
+
+loadRota()
 
 loadRota();
 let currentYear = 2026;
